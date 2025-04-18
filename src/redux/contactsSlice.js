@@ -48,24 +48,17 @@ const slice = createSlice({
     .addCase(deleteContact.fulfilled,(state, action) => {
         state.loading = false;
         state.error = null;
-        state.items=state.items.filter(item=>item.id!=action.payload.id);
+       
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        state.items.splice(index, 1);
     })
     .addCase(deleteContact.rejected,(state, action) => {
       state.loading = false;
-      state.error = action.payload;
-    
+      state.error = action.payload;    
     })
   },
-  reducers: {
-    addContact: (state, action) => {
-      state.items.push(action.payload);
-    },
-    deleteContact: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
-    },
-  },
 });
-
-
 
 export default slice.reducer;
